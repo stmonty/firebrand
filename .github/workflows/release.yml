@@ -1,6 +1,6 @@
 name: Release
 
-# Push a tag like v0.1.0 to publish that version to PyPI. Publishing uses PyPI
+# Push a tag like v0.0.1 to publish that version to PyPI. Publishing uses PyPI
 # trusted publishing: no token is stored in the repository.
 
 on:
