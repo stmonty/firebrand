@@ -1,0 +1,36 @@
+# Local environments and credentials
+.venv/
+.direnv/
+.env
+.env.*
+!.env.example
+
+# Python builds and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Generated models, demo output, and external dependencies
+artifacts/
+third_party/
+/frames/
+/countdown/
+riscv/**/build*/
+riscv/emulator/rv32emu
+*.o
+*.so
+*.dylib
+*.elf
+
+# Local editor and OS files
+.DS_Store
+*.swp
+*.swo

@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "firebrand"
+version = "0.1.0"
+description = "Compile programs into exact transformer weights"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "stmonty", email = "stmontydev@gmail.com" }]
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0,<3"]
+keywords = ["transformer", "compiler", "attention", "interpretability", "neural networks"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: C",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Compilers",
+]
+
+[project.optional-dependencies]
+gpu = ["torch>=2.4", "triton>=3.0; platform_system == 'Linux'"]
+llm = ["torch>=2.4", "transformers>=5.0"]
+dev = ["pytest>=8,<10", "ruff>=0.15", "mypy>=1.13", "build>=1.2", "twine>=6"]
+
+[project.urls]
+Homepage = "https://github.com/stmonty/firebrand"
+Repository = "https://github.com/stmonty/firebrand"
+Issues = "https://github.com/stmonty/firebrand/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+firebrand = ["fastrt.c"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["riscv", "third_party", "artifacts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+ignore = [
+    "B905",    # zip() without strict=
+    "E501",    # long lines the formatter leaves (strings, generated C)
+    "E731",    # lambda assignment
+    "RUF001",  # ambiguous unicode (×, − are intended)
+    "RUF002",
+    "RUF003",
+    "RUF005",  # collection literal concatenation
+    "RUF017",  # sum() of short lists
+    "SIM108",  # ternary instead of if/else
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402", "E741"]
+"examples/*" = ["E402"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/firebrand"]
+warn_unused_ignores = true
+warn_redundant_casts = true
+
+[[tool.mypy.overrides]]
+module = ["torch", "torch.*", "triton", "triton.*", "transformers", "transformers.*", "tokenizers", "tokenizers.*", "safetensors", "safetensors.*"]
+ignore_missing_imports = true
